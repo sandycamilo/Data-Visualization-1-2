@@ -22,7 +22,9 @@
 // Return a number.
 
 function getTotalPassengers(data) {
-	return 0
+	// data is an array of the passagers ~ every passanger in an object in the array 
+	// return the length of the array 
+	return data.length 
 }
 
 // 2 ---------------------------------------------------------------
@@ -31,7 +33,12 @@ function getTotalPassengers(data) {
 // Return a number.
 
 function getSurvivorCount(data) {
-	return 0
+	// filter data for survived property 
+	return data.filter ( 
+		//  the callback function takes in p as a parameter and returns yes if survived ~ we include that passenger
+		p => p.fields.survived === 'Yes'
+		// .length returns the number of passengers 
+	).length
 }
 
 // 3 ---------------------------------------------------------------
@@ -39,7 +46,9 @@ function getSurvivorCount(data) {
 // Return a number.
 
 function getCasualityCount(data) {
-	return 0
+	return data.filter (
+		p => p.fields.survived === 'No'
+	).length
 }
 
 // 4 ---------------------------------------------------------------
@@ -49,7 +58,10 @@ function getCasualityCount(data) {
 // Return a number
 
 function countPassengersInClass(data, pclass) {
-	return 0
+	// takes in two parametes - data as an array and pclass as a string or number 
+	return data.filter(
+		p => p.fields.pclass === pclass
+	).length
 }
 
 // 5 ---------------------------------------------------------------
@@ -57,7 +69,9 @@ function countPassengersInClass(data, pclass) {
 // the data and passenger class. Return only passengers  
 
 function getSurvivorCountForClass(data, pclass) {
-	return 0
+	return data.filter(
+		p => p.fields.survived === 'Yes' && p.fields.pclass === pclass
+	).length
 }
 
 // 6 ---------------------------------------------------------------
@@ -66,7 +80,9 @@ function getSurvivorCountForClass(data, pclass) {
 // the number of passengers who did not survive for that class. 
 
 function getCasualityCountForClass(data, pclass) {
-	return 0
+	return data.filter(
+		p => p.fields.survived === 'No' && p.fields.pclass === pclass
+	).length
 }
 
 // 7 ---------------------------------------------------------------
