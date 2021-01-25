@@ -34,11 +34,10 @@ function getTotalPassengers(data) {
 
 function getSurvivorCount(data) {
 	// filter data for survived property 
-	return data.filter ( 
+	return data
+	.filter (p => p.fields.survived === 'Yes').length
 		//  the callback function takes in p as a parameter and returns yes if survived ~ we include that passenger
-		p => p.fields.survived === 'Yes'
 		// .length returns the number of passengers 
-	).length
 }
 
 // 3 ---------------------------------------------------------------
@@ -46,9 +45,8 @@ function getSurvivorCount(data) {
 // Return a number.
 
 function getCasualityCount(data) {
-	return data.filter (
-		p => p.fields.survived === 'No'
-	).length
+	return data
+	.filter (p => p.fields.survived === 'No').length
 }
 
 // 4 ---------------------------------------------------------------
@@ -59,9 +57,8 @@ function getCasualityCount(data) {
 
 function countPassengersInClass(data, pclass) {
 	// takes in two parametes - data as an array and pclass as a string or number 
-	return data.filter(
-		p => p.fields.pclass === pclass
-	).length
+	return data
+	.filter (p => p.fields.pclass === pclass).length
 }
 
 // 5 ---------------------------------------------------------------
@@ -69,9 +66,8 @@ function countPassengersInClass(data, pclass) {
 // the data and passenger class. Return only passengers  
 
 function getSurvivorCountForClass(data, pclass) {
-	return data.filter(
-		p => p.fields.survived === 'Yes' && p.fields.pclass === pclass
-	).length
+	return data
+	.filter(p => p.fields.survived === 'Yes' && p.fields.pclass === pclass).length
 }
 
 // 6 ---------------------------------------------------------------
@@ -80,9 +76,8 @@ function getSurvivorCountForClass(data, pclass) {
 // the number of passengers who did not survive for that class. 
 
 function getCasualityCountForClass(data, pclass) {
-	return data.filter(
-		p => p.fields.survived === 'No' && p.fields.pclass === pclass
-	).length
+	return data
+	.filter(p => p.fields.survived === 'No' && p.fields.pclass === pclass).length
 }
 
 // 7 ---------------------------------------------------------------
@@ -90,14 +85,23 @@ function getCasualityCountForClass(data, pclass) {
 // passenger data where the age is missing. 
 
 function getMinAge(data) {
-	return 0
+	// filter passenger data and use array map to get all of the passenger ages 
+	const age =  data.filter(p => p.fields.age !== undefined).map( p => p.fields.age)
+	// get youngest age with Math.min ~ does not work with arrays so we use the rest operator (...) 
+	// the rest operator takes all of the numbers in the array and spreads them out as parameters
+	const minage = Math.min(...age)
+	return minage
 }
 
 // 8 ---------------------------------------------------------------
 // Return the age of the oldest passenger. 
 
 function getMaxAge(data) {
-	return 0
+	// filter data to get all of the ages and leave out the undefined 
+	const age = data.filter(p => p.fields.age !== undefined).map(p => p.fields.age)
+	// get oldest age with Math.max and rest operator for array
+	const maxage = Math.max(...age)
+	return maxage
 }
 
 // 9 ---------------------------------------------------------------
@@ -106,7 +110,8 @@ function getMaxAge(data) {
 // or Q. 
 
 function getEmbarkedCount(data, embarked) {
-	return 0
+	return data
+	.filter(p => p.fields.embarked == embarked).length 
 }
 
 // 10 ---------------------------------------------------------------
@@ -114,7 +119,9 @@ function getEmbarkedCount(data, embarked) {
 // for some passengers you'll need to filter this out! 
 
 function getMinFare(data) {
-	return 0
+	const fares = data.filter(p => p.fields.fare !== undefined).map(p => p.fields.fare)
+	const minfare = Math.min(...fares)
+	return minfare
 }
 
 // 11 ---------------------------------------------------------------
@@ -122,42 +129,49 @@ function getMinFare(data) {
 // passengers are missing data for fare.
 
 function getMaxFare(data) {
-	return 0
+	const fares = data.filter(p => p.fields.fare !== undefined).map(p => p.fields.fare)
+	const maxfare = Math.max(...fares)
+	return maxfare
 }
 
 // 12 ---------------------------------------------------------------
 // Return the count of passengers by gender. 
 
 function getPassengersByGender(data, gender) {
-	return 0
+	return data
+	.filter(p => p.fields.sex == gender).length
 }
 
 // 13 ---------------------------------------------------------------
 // Return the number of passengers who survived by gender. 
 
 function getSurvivorsByGender(data, gender) {
-	return 0
+	return data
+	.filter (p => p.fields.sex == gender && p.fields.survived == 'Yes').length
 }
 
 // 14 ---------------------------------------------------------------
 // Return the number of passengers who did not survived by gender. 
 
 function getCasualitiesByGender(data, gender) {
-	return 0
+	return data
+	.filter(p => p.fields.sex == gender && p.fields.survived == 'No').length
 }
 
 // 15 ---------------------------------------------------------------
 // Return the number of passengers who survived by passenger class.
 
 function getSurvivorsByPClass(data, pclass) {
-	return 0
+	return data 
+	.filter(p => p.fields.pclass == pclass && p.fields.survived == 'Yes').length
 }
 
 // 16 ---------------------------------------------------------------
-// Return the number of passengers who survived by passenger class.
+// Return the number of passengers who did not survived by passenger class.
 
 function getCasualitiesByPClass(data, pclass) {
-	return 0
+	return data
+	.filter(p => p.fields.pclass == pclass && p.fields.survived == 'No').length
 }
 
 // 17 ---------------------------------------------------------------
@@ -168,7 +182,10 @@ function getCasualitiesByPClass(data, pclass) {
 // function should return: ['S', 'C', 'Q']
 
 function getUniqueValues(data, property) {
-	return 0
+	const emb = data.map(p => p.fields === property)
+	const uni = new Set(emb)
+	const uniEmb = Array.from(uni)
+	return uniEmb
 }
 
 // 18 ---------------------------------------------------------------
@@ -177,29 +194,44 @@ function getUniqueValues(data, property) {
 // missing from the data. 
 
 function getAllOfField(data, field) {
-	return 0
+	return data
+	.filter(p => p.fields !== undefined).map(p => p.fields == field)
 }
 
 // 19 --------------------------------------------------------------
 // Return the total of all fares paid. 
 
 function getTotalFare(data) {
-	return 0
+	return data
+	// filter data  
+	.filter(p => p.fields.fare !== undefined)
+	// reduce to a single value - the total 
+	.reduce((acc, p) => acc + p.fields.fare, 0)
 }
 
 // 20 --------------------------------------------------------------
-// Return the average fare paid.
+// Return the average fare paid. 
+// total / number of fares 
 
 function getAverageFare(data) {
-	return 0
+	const fares = data.filter(p => p.fields.fare !== undefined).length
+	const total = data.reduce((acc, p) => acc + p.fields.fare, 0)
+	return total/fares
 }
 
 // 21 --------------------------------------------------------------
 // Return the median fare. The median is the value equal distance
 // from the minimum and maximum values. 
+// 14.4542
 
 function getMedianFare(data) {
-	return 0
+	// map fares - returns a new array 
+	// sort fares - sorts original array alphabetically in place 
+	// find median
+	const fares = data.filter(p => p.fields.fare !== undefined).length 
+	const newfares = fares.map(p => p.fields.fare).sort( (a, b) => a - b )
+	const medfare = newfares[Math.ceil(newfares.length/2)]
+	return medfare
 }
 
 // 22 --------------------------------------------------------------
@@ -211,6 +243,7 @@ function getAverageAge(data) {
 
 // 23 --------------------------------------------------------------
 // Return the median age from passengers. 
+// 28
 
 function getMedianAge(data) {
 	return 0
