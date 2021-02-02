@@ -24,7 +24,7 @@ beforeAll((done) => {
 })
 
 
-describe.skip('Challenge 2 Titanic', () => {
+describe('Challenge 2 Titanic', () => {
 
 	test('Test getAll', () => {
 		const allFares = data.map(p => p.fields.fare)

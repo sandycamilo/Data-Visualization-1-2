@@ -193,10 +193,11 @@ function getUniqueValues(data, property) {
 // not undefined. If a field is undefined it means that field is 
 // missing from the data. 
 
-function getAllOfField(data, field) {
-	return data
-	.filter(p => p.fields !== undefined).map(p => p.fields == field)
-}
+// function getAllOfField(data, field) {
+// 	return data
+// 	.filter(p => p.fields[field] !== undefined)
+// 	// .map(p => p.fields == field)
+// }
 
 // 19 --------------------------------------------------------------
 // Return the total of all fares paid. 
@@ -228,17 +229,26 @@ function getMedianFare(data) {
 	// map fares - returns a new array 
 	// sort fares - sorts original array alphabetically in place 
 	// find median
-	const fares = data.filter(p => p.fields.fare !== undefined).length 
+	const fares = data.filter(p => p.fields.fare !== undefined)
 	const newfares = fares.map(p => p.fields.fare).sort( (a, b) => a - b )
-	const medfare = newfares[Math.ceil(newfares.length/2)]
-	return medfare
+	if (newfares.length %2 === 0) {
+		const a = newfares[newfares.length/2]
+		const b = newfares[newfares.length/2 -1]
+		return a+b / 2
+	} 
+		const medfare = newfares[Math.ceil(newfares.length/2)]
+		return medfare
 }
 
 // 22 --------------------------------------------------------------
 // Return the average age of all passengers. 
 
 function getAverageAge(data) {
-	return 0
+	const filteredages = data
+	.map(p => p.fields.age)
+	.filter(age => age !== undefined)
+	const totalAges = filteredages.reduce((acc, age) => acc + age, 0)
+	return totalAges / filteredages.length
 }
 
 // 23 --------------------------------------------------------------
@@ -246,14 +256,20 @@ function getAverageAge(data) {
 // 28
 
 function getMedianAge(data) {
-	return 0
+	const ages = data
+		.map(p => p.fields.age)
+		.filter(age => age !== undefined)
+		.sort((a,b) => a - b)
+	return ages[Math.ceil(ages.length / 2)]
 }
 
 // 24 --------------------------------------------------------------
 // 
 
 function getAverageAgeByGender(data, gender) {
-	return 0
+	const agengen = data.filter(p => p.fields.age !== undefined && p.fields.sex === gender)
+  const avagegen = agengen.reduce((acc, p) => acc + p.fields.age, 0)
+  return avagegen / agengen.length
 }
 
 // --------------------------------------------------------------

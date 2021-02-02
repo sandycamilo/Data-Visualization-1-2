@@ -125,7 +125,7 @@ describe('Challenge 1 Titanic', () => {
 	})
 
 	test('Test getMedianFare', () => {
-		expect(index.getMedianFare(data)).toBe(256.1646)
+		expect(index.getMedianFare(data)).toBe(14.4542)
 	})
 
 	test('Test getAverageAge', () => {
@@ -133,7 +133,7 @@ describe('Challenge 1 Titanic', () => {
 	})
 
 	test('Test getMedianAge', () => {
-		expect(index.getMedianAge(data)).toBe(39.79)
+		expect(index.getMedianAge(data)).toBe(28)
 	})
 
 	test('Test getAverageAgeByGender', () => {

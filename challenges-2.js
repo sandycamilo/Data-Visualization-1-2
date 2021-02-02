@@ -25,7 +25,8 @@
 // Or if property = 'age' -> [40, 26, 22, 28, 23, 45, 21, ...]
 
 function getAllValuesForProperty(data, property) {
-	return []
+	const valuesofproperties = data.map(p => p.fields[property])
+	return valuesofproperties
 }
 
 // 2 -------------------------------------------------------------
@@ -34,7 +35,7 @@ function getAllValuesForProperty(data, property) {
 // array of all the male passengers [{...}, {...}, {...}, ...]
 
 function filterByProperty(data, property, value) {
-	return []
+	return data.filter(p => p.fields[property] === value)
 }
 
 // 3 -------------------------------------------------------------
@@ -43,7 +44,7 @@ function filterByProperty(data, property, value) {
 // given property have been removed
 
 function filterNullForProperty(data, property) {
-	return []
+	return data.filter(p => p.filter[property] !== undefined)
 }
 
 // 4 -------------------------------------------------------------
@@ -52,7 +53,8 @@ function filterNullForProperty(data, property) {
 // Return the total of all values for a given property. This
 
 function sumAllProperty(data, property) {
-	return 0
+	const propertyfiltered = data.filter(p => p.fields[property] !== undefined)
+	return propertyfiltered.reduce((acc, p) => acc + p.fields[property], 0)
 }
 
 
